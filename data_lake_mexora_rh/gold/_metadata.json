@@ -1,0 +1,16 @@
+{
+  "zone": "gold",
+  "description": "Tables analytiques pré-calculées pour dashboards et reporting",
+  "format": "Parquet (Snappy)",
+  "nb_tables": 5,
+  "tables": [
+    "entreprises_recruteurs.parquet",
+    "offres_par_ville.parquet",
+    "salaires_par_profil.parquet",
+    "tendances_mensuelles.parquet",
+    "top_competences.parquet"
+  ],
+  "source": "Zone Silver (offres_clean + competences)",
+  "outil_requetage": "DuckDB SQL",
+  "date_generation": "2026-05-06T21:12:41.441366"
+}

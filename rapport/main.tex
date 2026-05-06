@@ -1,0 +1,386 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{fontawesome5}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{multicol}
+\usepackage{parskip}
+\usepackage{caption}
+
+% ── Couleurs Mexora ───────────────────────────────────────
+\definecolor{mexblue}{HTML}{1A237E}
+\definecolor{mexcyan}{HTML}{0097A7}
+\definecolor{mexgold}{HTML}{F9A825}
+\definecolor{mexgray}{HTML}{37474F}
+\definecolor{mexlight}{HTML}{E3F2FD}
+\definecolor{mexgreen}{HTML}{2E7D32}
+\definecolor{mexred}{HTML}{C62828}
+\definecolor{mexorange}{HTML}{E65100}
+
+% ── Titres ────────────────────────────────────────────────
+\titleformat{\section}{\Large\bfseries\color{mexblue}}{\thesection.}{0.5em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{mexcyan}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{mexgray}}{\thesubsubsection}{0.5em}{}
+
+% ── Header / Footer ──────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{mexgray}\textit{Mexora --- Analyse Marché IT Maroc}}
+\fancyhead[R]{\small\color{mexgray}\textit{Miniprojet 2 --- Data Lake}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Boîtes ────────────────────────────────────────────────
+\newtcolorbox{keybox}[1][]{colback=mexlight,colframe=mexblue,fonttitle=\bfseries,title=#1,boxrule=0.5pt,arc=3pt}
+\newtcolorbox{recobox}[1][]{colback=green!5,colframe=mexgreen,fonttitle=\bfseries,title=#1,boxrule=0.5pt,arc=3pt}
+\newtcolorbox{alertbox}[1][]{colback=red!5,colframe=mexred,fonttitle=\bfseries,title=#1,boxrule=0.5pt,arc=3pt}
+\newtcolorbox{statbox}[1][]{colback=orange!5,colframe=mexorange,fonttitle=\bfseries,title=#1,boxrule=0.5pt,arc=3pt}
+
+\hypersetup{colorlinks=true,linkcolor=mexblue,urlcolor=mexcyan}
+
+\begin{document}
+
+% ══════════════════════════════════════════════════════════
+% PAGE DE GARDE
+% ══════════════════════════════════════════════════════════
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay]
+  \fill[mexblue] (current page.north west) rectangle ([yshift=-9cm]current page.north east);
+  \fill[mexcyan] ([yshift=-9cm]current page.north west) rectangle ([yshift=-9.5cm]current page.north east);
+  \fill[mexgold] ([yshift=-9.5cm]current page.north west) rectangle ([yshift=-9.7cm]current page.north east);
+  % Cercle décoratif
+  \fill[white,opacity=0.05] ([xshift=3cm,yshift=-4cm]current page.north east) circle (6cm);
+  \fill[white,opacity=0.03] ([xshift=-2cm,yshift=-7cm]current page.north west) circle (4cm);
+\end{tikzpicture}
+
+\vspace*{1cm}
+\begin{center}
+{\color{white}\fontsize{28}{34}\selectfont\bfseries Analyse du Marché de\\[0.4cm] l'Emploi IT au Maroc}\\[1cm]
+{\color{mexlight}\LARGE\bfseries Data Lake \& Intelligence RH}\\[0.5cm]
+{\color{mexgold}\large Janvier 2023 --- Novembre 2024 \textbar{} 5\,000 offres analysées}
+\end{center}
+
+\vspace{4.5cm}
+\begin{center}
+{\Large\bfseries\color{mexblue} Rapport Analytique pour la Direction des Ressources Humaines}\\[0.4cm]
+{\large\color{mexgray} Miniprojet 2 --- Data Engineering \textbar{} Semestre 6}\\[2.5cm]
+
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{r@{\hspace{0.8cm}}l}
+\faUser~\textbf{Réalisé par} & \textbf{Yasser Ghliyem} \\
+\faUniversity~\textbf{Formation} & FSTM --- Licence Data Engineering \\
+\faGithub~\textbf{GitHub} & \url{https://github.com/YasserGhliyem} \\
+\faBuilding~\textbf{Entreprise} & Mexora --- Tanger, Maroc \\
+\faCalendar~\textbf{Date} & Mai 2026 \\
+\end{tabular}
+\end{center}
+
+\vfill
+\begin{center}
+\color{mexgray}\small\faLock~Document confidentiel --- Usage interne Mexora
+\end{center}
+\end{titlepage}
+
+% ── Table des matières ────────────────────────────────────
+\tableofcontents
+\newpage
+
+% ══════════════════════════════════════════════════════════
+% 1. RÉSUMÉ EXÉCUTIF
+% ══════════════════════════════════════════════════════════
+\section{Résumé Exécutif}
+
+\begin{keybox}[\faChartLine~Synthèse décisionnelle]
+Ce rapport présente les résultats de l'analyse de \textbf{5\,000 offres d'emploi IT} collectées via scraping sur trois plateformes marocaines (Rekrute, MarocAnnonce, LinkedIn Maroc) couvrant la période \textbf{janvier 2023 -- novembre 2024}. L'objectif est d'éclairer la stratégie de recrutement de Mexora à Tanger par une vision data-driven du marché.
+\end{keybox}
+
+\subsection{Chiffres clés du pipeline}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{>{\centering\bfseries}X >{\centering\bfseries}X >{\centering\bfseries}X >{\centering\arraybackslash\bfseries}X}
+\toprule
+\color{mexblue}5\,150 $\rightarrow$ 5\,000 & \color{mexcyan}7 profils IT & \color{mexorange}17\,500 MAD & \color{mexgreen}22\,069 \\
+offres (150 doublons éliminés) & normalisés & salaire médian & compétences détectées \\
+\midrule
+\color{mexblue}3 sources & \color{mexcyan}5 villes & \color{mexorange}57,6\% & \color{mexgreen}12 compétences \\
+scraping web & normalisées & salaires renseignés & dans le référentiel \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Conclusions principales}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{SQL et Python} dominent le marché avec respectivement 3\,795 et 2\,797 mentions --- compétences universelles.
+    \item \textbf{Casablanca concentre 42,7\%} des offres (2\,136), suivie de Fès (740), Rabat (736) et \textbf{Tanger (713, soit 14,3\%)}.
+    \item Le \textbf{salaire médian IT} est de \textbf{17\,500 MAD/mois} avec une fourchette de 8\,000 à 21\,600 MAD.
+    \item Les profils \textbf{Data Engineer} (1\,111 offres) et \textbf{Data Analyst} (1\,110) sont les plus recherchés parmi les profils data.
+    \item Le \textbf{télétravail/hybride concerne 75\%} des offres toutes villes confondues, confirmant une tendance structurelle post-COVID.
+\end{enumerate}
+
+% ══════════════════════════════════════════════════════════
+% 2. MÉTHODOLOGIE
+% ══════════════════════════════════════════════════════════
+\section{Méthodologie et Architecture Technique}
+
+\subsection{Architecture Data Lake Medallion}
+
+Le traitement des données suit l'architecture \textbf{Medallion} (Bronze / Silver / Gold), standard industriel pour les Data Lakes modernes :
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{l l l X}
+\toprule
+\textbf{Zone} & \textbf{Format} & \textbf{Partition} & \textbf{Rôle} \\
+\midrule
+\textcolor{orange}{\faDatabase~\textbf{Bronze}} & JSON & source / mois & Archive immuable --- données brutes telles que reçues \\
+\textcolor{gray}{\faCog~\textbf{Silver}} & Parquet & ville / mois & Données nettoyées, typées, enrichies (NLP) \\
+\textcolor{mexgold}{\faCrown~\textbf{Gold}} & Parquet & --- & Tables analytiques pré-calculées pour reporting \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Pipeline de traitement (4 étapes)}
+
+\begin{statbox}[\faCogs~Transformations appliquées --- Chiffres réels]
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Bronze --- Ingestion} : 5\,150 offres chargées dans \textbf{63 partitions} (3 sources $\times$ 21 mois). 246 dates invalides détectées.
+    \item \textbf{Silver --- Nettoyage} : \textbf{150 doublons} supprimés. 7 variantes de villes $\rightarrow$ 5 normalisées. 5 types de contrats $\rightarrow$ 2 standards. 88,7\% des titres classés en 7 profils IT. 240 dates nulles détectées.
+    \item \textbf{Silver --- NLP} : Extraction de compétences par matching regex word-boundary sur le référentiel IT. \textbf{22\,069 détections} totales, moyenne de \textbf{4,4 compétences/offre}. 100\% des offres ont au moins 1 compétence.
+    \item \textbf{Gold --- Agrégation} : 5 tables analytiques construites via \textbf{DuckDB SQL} : top\_competences (84 lignes), salaires\_par\_profil (70), offres\_par\_ville (728), entreprises\_recruteurs (25), tendances\_mensuelles (140).
+\end{enumerate}
+\end{statbox}
+
+\subsection{Stack technique}
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Python 3.14} --- Orchestration
+    \item \textbf{Pandas + PyArrow} --- ETL + Parquet
+    \item \textbf{DuckDB} --- SQL analytique sur fichiers
+    \item \textbf{Regex NLP} --- Extraction compétences
+    \item \textbf{Matplotlib / Seaborn} --- Visualisations
+    \item \textbf{LaTeX} --- Rapport professionnel
+\end{itemize}
+\end{multicols}
+
+% ══════════════════════════════════════════════════════════
+% 3. ÉTAT DU MARCHÉ
+% ══════════════════════════════════════════════════════════
+\section{État du Marché IT Marocain}
+
+\subsection{Répartition géographique}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{l r r r X}
+\toprule
+\textbf{Ville} & \textbf{Offres} & \textbf{\% Total} & \textbf{\% Remote} & \textbf{Observation} \\
+\midrule
+Casablanca & 2\,136 & 42,7\% & 75,0\% & Hub principal --- CasaNearshore \\
+Fès & 740 & 14,8\% & 76,6\% & Pôle émergent --- taux remote élevé \\
+Rabat & 736 & 14,7\% & 71,3\% & Institutionnel --- marchés publics \\
+\rowcolor{mexlight} \textbf{Tanger} & \textbf{713} & \textbf{14,3\%} & \textbf{74,8\%} & \textbf{Dynamique --- TangerTech} \\
+Marrakech & 675 & 13,5\% & 75,0\% & Tourisme tech \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{keybox}[\faMapMarkerAlt~Focus stratégique Tanger]
+Tanger représente \textbf{14,3\% du marché IT} avec 713 offres et un taux de remote de 74,8\%. Ce taux élevé signifie que les entreprises tangéroises recrutent déjà largement au-delà du bassin local. Pour Mexora, c'est un signal positif : le modèle hybride est naturellement accepté par le marché local.
+\end{keybox}
+
+\subsection{Profils les plus demandés}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{r l r r X}
+\toprule
+\textbf{\#} & \textbf{Profil normalisé} & \textbf{Offres} & \textbf{\%} & \textbf{Catégorie} \\
+\midrule
+1 & Data Engineer & 1\,111 & 22,2\% & \textcolor{mexorange}{\faDatabase~Data} \\
+2 & Data Analyst & 1\,110 & 22,2\% & \textcolor{mexorange}{\faChartBar~Data} \\
+3 & Data Scientist & 576 & 11,5\% & \textcolor{mexorange}{\faBrain~Data} \\
+4 & Admin Systèmes \& Réseaux & 573 & 11,5\% & \textcolor{mexcyan}{\faServer~Infra} \\
+5 & Autre IT & 566 & 11,3\% & \textcolor{mexgray}{\faCode~Divers} \\
+6 & DevOps / SRE & 534 & 10,7\% & \textcolor{mexgreen}{\faDocker~Infra} \\
+7 & Développeur Full Stack & 530 & 10,6\% & \textcolor{mexblue}{\faLaptopCode~Dev} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Les profils \textbf{Data} (Engineer + Analyst + Scientist) représentent à eux trois \textbf{55,9\%} du marché, confirmant la transformation data-driven des entreprises marocaines.
+
+% ══════════════════════════════════════════════════════════
+% 4. COMPÉTENCES
+% ══════════════════════════════════════════════════════════
+\section{Analyse des Compétences}
+
+\subsection{Top 10 compétences --- toutes offres confondues}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{r l l r}
+\toprule
+\textbf{\#} & \textbf{Compétence} & \textbf{Famille} & \textbf{Mentions} \\
+\midrule
+1 & \textbf{SQL} & Langages & \textbf{3\,795} \\
+2 & \textbf{Python} & Langages & \textbf{2\,797} \\
+3 & Angular & Frameworks Web & 1\,582 \\
+4 & Java & Langages & 1\,582 \\
+5 & Spring & Frameworks Web & 1\,582 \\
+6 & Spark & Data Engineering & 1\,551 \\
+7 & React & Frameworks Web & 1\,542 \\
+8 & JavaScript & Langages & 1\,542 \\
+9 & Power BI & BI \& Analytics & 1\,527 \\
+10 & Airflow & Data Engineering & 1\,526 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{SQL} est la compétence n°1 incontestée avec 3\,795 mentions (75,9\% des offres), devant Python (2\,797, soit 55,9\%). Le duo \textbf{SQL + Python} constitue le socle universel de tout profil IT data au Maroc.
+
+\subsection{Top 5 compétences par profil Data}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{r X X X}
+\toprule
+\textbf{Rang} & \textbf{Data Engineer} & \textbf{Data Analyst} & \textbf{Data Scientist} \\
+\midrule
+1 & SQL (854) & SQL (843) & SQL (442) \\
+2 & Python (607) & Python (625) & Python (310) \\
+3 & React (353) & Angular (365) & Airflow (190) \\
+4 & JavaScript (353) & Spring (365) & GCP (190) \\
+5 & Spring (350) & Java (365) & Power BI (185) \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\begin{keybox}[\faLightbulb~Insight compétences]
+Le socle \textbf{SQL + Python} est demandé dans les trois profils data sans exception. Les Data Engineers et Data Analysts montrent une forte demande en frameworks web (React, Angular, Spring), suggérant que ces profils sont souvent polyvalents au Maroc et ne se limitent pas au pur data. Les Data Scientists se distinguent par la demande en outils cloud (GCP) et d'orchestration (Airflow).
+\end{keybox}
+
+% ══════════════════════════════════════════════════════════
+% 5. ANALYSE SALARIALE
+% ══════════════════════════════════════════════════════════
+\section{Analyse Salariale}
+
+\subsection{Grille salariale nationale}
+
+Sur les 5\,000 offres analysées, \textbf{2\,881 (57,6\%)} communiquent un salaire exploitable. Les 42,4\% restants affichent \og{}Selon profil\fg{}, \og{}Confidentiel\fg{} ou un champ vide --- un manque de transparence typique du marché marocain.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{l r r r r}
+\toprule
+\textbf{Profil} & \textbf{Nb offres} & \textbf{Min (MAD)} & \textbf{Médiane} & \textbf{Max (MAD)} \\
+\midrule
+Data Engineer & 1\,111 & 8\,000 & \textbf{17\,500} & 21\,600 \\
+Data Analyst & 1\,110 & 8\,000 & \textbf{17\,500} & 21\,600 \\
+Data Scientist & 576 & 8\,000 & \textbf{17\,500} & 21\,600 \\
+DevOps / SRE & 534 & 8\,000 & \textbf{17\,500} & 21\,600 \\
+Admin Sys. \& Réseaux & 573 & 8\,000 & \textbf{17\,500} & 21\,600 \\
+Dév. Full Stack & 530 & 8\,000 & \textbf{17\,500} & 21\,600 \\
+Autre IT & 566 & 8\,000 & \textbf{17\,500} & 21\,600 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+{\small\textit{Montants en MAD mensuel brut. Fourchettes basées sur les salaires valides uniquement.}}
+
+\begin{alertbox}[\faExclamationTriangle~Observation sur les salaires]
+La médiane uniforme de 17\,500 MAD s'explique par le fait que les données brutes contiennent des fourchettes standardisées (\og{}15000-20000 MAD\fg{}, \og{}15K-20K\fg{}, \og{}8000-12000 dh\fg{}). Dans un jeu de données réel, les écarts seraient plus marqués entre profils. Néanmoins, la fourchette globale \textbf{8\,000 --- 21\,600 MAD} est réaliste pour le marché IT marocain.
+\end{alertbox}
+
+\subsection{Transparence salariale}
+
+Seulement \textbf{57,6\%} des offres communiquent un salaire. Ce manque de transparence est un frein au recrutement. Les 42,4\% restants se répartissent entre :
+\begin{itemize}[leftmargin=*]
+    \item \og{}Selon profil\fg{} --- 14\% des offres
+    \item \og{}Confidentiel\fg{} --- 10\%
+    \item Champ vide (\texttt{null}) --- 18,4\%
+\end{itemize}
+
+\subsection{Top 5 entreprises recruteurs}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{r l l r}
+\toprule
+\textbf{\#} & \textbf{Entreprise} & \textbf{Ville siège} & \textbf{Offres publiées} \\
+\midrule
+1 & DataWize & Casablanca & 466 \\
+2 & BankAlMaghrib & Casablanca & 437 \\
+3 & TechMaroc SARL & Casablanca & 423 \\
+4 & Inwi & Casablanca & 408 \\
+5 & TangerMedTech & Casablanca & 402 \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Les 5 principaux recruteurs totalisent \textbf{2\,136 offres (42,7\%)}, révélant une concentration significative du marché. DataWize mène avec 466 offres, suivi par BankAlMaghrib (secteur bancaire) et TechMaroc (SSII).
+
+% ══════════════════════════════════════════════════════════
+% 6. RECOMMANDATIONS POUR MEXORA
+% ══════════════════════════════════════════════════════════
+\section{Recommandations Stratégiques pour Mexora}
+
+\begin{recobox}[\faRocket~R1 --- Transparence salariale comme avantage concurrentiel]
+Avec 42,4\% des offres sans salaire communiqué, Mexora peut se démarquer en \textbf{affichant systématiquement des fourchettes salariales claires}. Notre analyse montre que la médiane IT est de 17\,500 MAD/mois. Pour les profils Data Engineer et DevOps (les plus rares), viser le haut de la fourchette (\textbf{20\,000--21\,600 MAD}) pour attirer les meilleurs talents.
+\end{recobox}
+
+\begin{recobox}[\faLaptopHouse~R2 --- Capitaliser sur le modèle hybride (74,8\% à Tanger)]
+Le taux de télétravail à Tanger (74,8\%) est quasi-identique à la moyenne nationale (75\%). Mexora doit proposer un \textbf{modèle hybride flexible} (2-3 jours remote) pour élargir son vivier au-delà de Tanger. Cibler les profils de Casablanca (42,7\% du marché) attirés par un meilleur cadre de vie sans perte de remote.
+\end{recobox}
+
+\begin{recobox}[\faGraduationCap~R3 --- Former sur le socle SQL + Python]
+SQL (3\,795 mentions) et Python (2\,797) sont les deux compétences universelles du marché IT marocain. Mexora devrait créer un \textbf{programme de montée en compétences} interne de 3 mois centré sur ce socle, complété par une spécialisation (Spark/Airflow pour Data Eng, Power BI pour Data Analyst).
+\end{recobox}
+
+\begin{recobox}[\faBullseye~R4 --- Profils prioritaires à recruter]
+Les Data Engineers (1\,111 offres, 22,2\%) et Data Analysts (1\,110, 22,2\%) dominent le marché. Mexora doit prioriser ces deux profils en s'appuyant sur Tanger (713 offres disponibles) et un package incluant : salaire $\geq$ 17\,500 MAD + remote + stack technique moderne.
+\end{recobox}
+
+\begin{recobox}[\faChartBar~R5 --- Stack technique attractif]
+Adopter les technologies les plus demandées : \textbf{SQL, Python, Spark, Airflow, React, Angular, AWS}. Un environnement technique aligné sur les standards du marché est un argument de recrutement aussi puissant que le salaire, particulièrement pour les profils data engineering et DevOps qui valorisent l'exposition technologique.
+\end{recobox}
+
+\subsection{Matrice de priorité}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabularx}{\textwidth}{X c c l}
+\toprule
+\textbf{Action} & \textbf{Impact} & \textbf{Effort} & \textbf{Délai} \\
+\midrule
+Grille salariale transparente & \textcolor{mexgreen}{\textbf{Élevé}} & Faible & 1 mois \\
+Politique télétravail hybride & \textcolor{mexgreen}{\textbf{Élevé}} & Moyen & 2 mois \\
+Recrutement Data Eng. + Analyst & \textcolor{mexgreen}{\textbf{Élevé}} & Moyen & 3 mois \\
+Programme formation SQL/Python & \textcolor{mexgreen}{\textbf{Élevé}} & Élevé & 6 mois \\
+Modernisation stack technique & Moyen & Élevé & 6--12 mois \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\vfill
+\begin{center}
+\rule{0.5\textwidth}{0.4pt}\\[0.3cm]
+{\small\color{mexgray}\faDatabase~Données : 5\,000 offres IT $\vert$ Pipeline : Python + DuckDB $\vert$ Architecture : Data Lake Medallion}\\[0.2cm]
+{\small\color{mexgray}\faGithub~\url{https://github.com/YasserGhliyem} --- Mai 2026}
+\end{center}
+
+\end{document}

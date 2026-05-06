@@ -1,0 +1,15 @@
+{
+  "zone": "bronze",
+  "description": "Données brutes des offres d'emploi IT Maroc — archive immuable",
+  "format": "JSON",
+  "partitionnement": "source / mois",
+  "nb_offres_total": 5150,
+  "nb_partitions": 63,
+  "sources": [
+    "marocannonce",
+    "linkedin",
+    "rekrute"
+  ],
+  "source_fichier": "offres_emploi_it_maroc.json",
+  "date_generation": "2026-05-06T21:12:37.054355"
+}

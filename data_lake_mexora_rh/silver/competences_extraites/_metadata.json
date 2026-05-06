@@ -1,0 +1,17 @@
+{
+  "table": "competences_extraites",
+  "format": "Parquet (Snappy)",
+  "nb_lignes": 22069,
+  "colonnes": [
+    "id_offre",
+    "profil",
+    "ville",
+    "competence",
+    "famille",
+    "date_pub",
+    "annee",
+    "mois"
+  ],
+  "taille_ko": 111,
+  "date_generation": "2026-05-06T21:12:41.272384"
+}

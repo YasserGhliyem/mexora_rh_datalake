@@ -1,0 +1,9 @@
+2026-05-06 21:12:36,688 │ bronze_ingestion │ INFO │ Début ingestion Bronze depuis : C:\Users\Lenovo\OneDrive\Bureau\9raya\s6\data engerening\projet2\offres_emploi_it_maroc.json
+2026-05-06 21:12:36,740 │ bronze_ingestion │ INFO │ 5150 offres lues depuis le fichier source
+2026-05-06 21:12:36,790 │ bronze_ingestion │ WARNING │ 246 offres avec date_publication invalide → partition 'date_inconnue'
+2026-05-06 21:12:37,055 │ bronze_ingestion │ INFO │ [BRONZE] ✅ 5150 offres ingérées dans 63 partitions
+2026-05-06 21:12:37,055 │ bronze_ingestion │ INFO │   └─ marocannonce: 1746 offres
+2026-05-06 21:12:37,056 │ bronze_ingestion │ INFO │   └─ linkedin: 1728 offres
+2026-05-06 21:12:37,056 │ bronze_ingestion │ INFO │   └─ rekrute: 1676 offres
+2026-05-06 21:12:37,066 │ bronze_ingestion │ INFO │ [BRONZE] Référentiel compétences copié dans Bronze
+2026-05-06 21:12:37,068 │ bronze_ingestion │ INFO │ [BRONZE] Fichier entreprises copié dans Bronze
